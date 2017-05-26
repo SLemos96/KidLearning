@@ -4,13 +4,14 @@
   <!-- estrutura do código retirada do site W3Schools -->
   <!-- adaptado por Samuel Lemos -->
   <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Bootstrap Theme Simply Me</title>
+  <title>KidLearning</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/meuStylos.css">
+  <script src="js/meuScripts.js"  type="text/javascript"></script>
 
 </head>
 <body>
@@ -20,17 +21,37 @@
 </div>
 
   <div class="container-fluid text-center">
-    <img src="imgs/andre2.gif" style="align:left;" alt="Pergunta" width="350" height="350">
+    <div class="row">
 
-    <form class="formulario" name="questao" action="">
-          <input type="radio" name="resposta" value="alt1"> Alternativa 1<br>
-          <input type="radio" name="resposta" value="alt2"> Alternativa 2<br>
-          <input type="radio" name="resposta" value="alt3"> Alternativa 3<br>
-          <input type="radio" name="resposta" value="alt4"> Alternativa 4
-    </form>
+      <div class=" col-md-6">
+      <img src="imgs/andre2.gif" alt="Pergunta" width="350" height="350">
+      </div>
+      
+      <div class="col-md-6">
+      <form class="formulario" name="questao" action="">
+        <input type="radio" name="resposta" value="alt1"> Alternativa 1<br>
+        <input type="radio" name="resposta" value="alt2"> Alternativa 2<br>
+        <input type="radio" name="resposta" value="alt3"> Alternativa 3<br>
+        <input type="radio" name="resposta" value="alt4"> Alternativa 4
+      </form>
+
+      <div class="botoes container-fluid text-center">
+        <a href="avaliacaoPergunta.html" class="btn btn-default btn-lg" onclick='testAlert()'>
+          <span class="glyphicon glyphicon-ok"></span>
+        </a>
+
+        <a href="" class="btn btn-default btn-lg" onclick='testAlert()'>
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+      </div>
+
+      </div>
+
+    </div>
     
-    <a href="#" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-ok"></span></a>
   </div>
+
+  
 
 </div>
 

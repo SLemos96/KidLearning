@@ -15,6 +15,15 @@
     padding-bottom: 20px;
 }
 
+.botoes{
+	margin-top: 0%;
+	position: absolute;
+}
+
+.formulario{
+	text-align: left;
+}
+
 .conteudo-pergunta{
 	top: 50%;
   	transform: translateY(-50%); /*centralizando o elemento*/

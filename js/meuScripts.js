@@ -38,3 +38,15 @@ function validarSenha(){
 		});
 	}
 }
+
+function testAlert(){
+	alert("Teste");
+}
+
+function naoAprova(){
+	alert("Você não aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
+}
+
+function aprova(){
+	alert("Você aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
+}
