@@ -45,6 +45,10 @@ function testAlert(){
 		alert("Por favor, insira uma resposta correta!");
 		$( "#botaoCheck" ).attr( "href", "#" );
 	}
+	else
+	{
+		$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
+	}
 }
 
 function naoAprova(){
