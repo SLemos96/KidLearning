@@ -40,7 +40,11 @@ function validarSenha(){
 }
 
 function testAlert(){
-	alert("Teste");
+	if($('input[name=resposta]:checked', '#formResposta').val() == null)
+	{
+		alert("Por favor, insira uma resposta correta!");
+		$( "#botaoCheck" ).attr( "href", "#" );
+	}
 }
 
 function naoAprova(){
