@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- estrutura do código retirada do site W3Schools -->
+  <!-- adaptado por Samuel Lemos -->
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>KidLearning</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/meuStylos.css">
+  <script src="js/meuScripts.js"  type="text/javascript"></script>
+
+</head>
+<body>
+
+<div class="container-fluid bg-1 text-center">
+  <h2>Insira os dados da sua pergunta:</h2>
+</div>
+
+  <div class="container-fluid text-center">
+    <div class="row">
+
+      <div class=" col-md-4">
+      </div>
+      
+      <div class="col-md-4">
+
+      	<form name="f1">
+      		<div class="form-group">
+      			<label for="inputPergunta">Insira a pergunta</label>
+      			<div class="input-group">
+               		<span class="input-group-addon"><span class="glyphicon glyphicon-question-sign"></span></span>
+                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+       			</div>
+    		</div>
+
+    		<div class="form-group">
+      			<label for="inputQ1">Insira a primeira alternativa</label>
+      			<div class="input-group">
+               		<span class="input-group-addon">1</span>
+                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+       			</div>
+    		</div>
+
+    		<div class="form-group">
+      			<label for="inputQ2">Insira a segunda alternativa</label>
+      			<div class="input-group">
+               		<span class="input-group-addon">2</span>
+                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+       			</div>
+    		</div>
+
+    		<div class="form-group">
+      			<label for="inputQ3">Insira a terceira alternativa</label>
+      			<div class="input-group">
+               		<span class="input-group-addon">3</span>
+                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+       			</div>
+    		</div>
+
+    		<div class="form-group">
+      			<label for="inputQ4">Insira a quarta alternativa</label>
+      			<div class="input-group">
+               		<span class="input-group-addon">4</span>
+                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+       			</div>
+    		</div>
+
+    		<div class="form-group">
+    			<label for="inputRespostaCorreta">Qual alternativa correta?</label>
+    			<div class="input-group text-center">
+    				<input type="radio" name="alternativa1" value="alt1"> Alternativa 1<br>
+        			<input type="radio" name="alternativa2" value="alt2"> Alternativa 2<br>
+        			<input type="radio" name="alternativa3" value="alt3"> Alternativa 3<br>
+        			<input type="radio" name="alternativa4" value="alt4"> Alternativa 4
+    			</div>
+    		</div>
+    		<div>
+    			<label for="inputFoto">Insira aqui sua foto</label>
+    			<input type="file" name="foto"/><br>
+    		</div>
+
+    		<div>
+    			<a id="botaoCheck" href="avaliacaoPergunta.html" class="btn btn-default btn-lg" onclick='testAlert()'><span class="glyphicon glyphicon-floppy-disk"></span>Cadastrar pergunta</a><br>
+
+        		<a href="inicio.html" class="btn btn-default btn-lg" onclick=''>
+          		<span class="glyphicon glyphicon-remove"></span>Cancelar e voltar ao Início</a>
+    		</div>
+      	</form>
+
+      </div>
+
+      <div class="col-md-4"></div>
+
+    </div>
+    
+  </div>
+
+  
+
+</div>
+
+</body>
+</html>
