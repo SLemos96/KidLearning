@@ -58,3 +58,35 @@ function naoAprova(){
 function aprova(){
 	alert("Você aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
 }
+
+function testCadastroPergunta(){
+	pergunta = document.formCadastro.question.value;
+	alternativa1 = document.formCadastro.alt1.value;
+	alternativa2 = document.formCadastro.alt2.value;
+	alternativa3 = document.formCadastro.alt3.value;
+	alternativa4 = document.formCadastro.alt4.value;
+
+	foto = document.formCadastro.foto.value;
+	if(pergunta == "" || alternativa1 == "" || alternativa2 == "" || alternativa3 == "" || alternativa4 == "")
+	{
+		alert("Por favor, insira os dados corretamente!");
+		$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+	}
+	else
+	{
+		if($('input[name=alternativas]:checked', '#formCadastro').val() == null){
+			alert("Por favor, insira uma alternativa de resposta!");
+			$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+		}
+		else{
+			if(foto == ""){
+				alert("Por favor, insira uma foto correspondente!");
+				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+			}
+			else{
+				alert("Pergunta cadastrada com sucesso! Equipe #KL");
+				$( "#botaoConfirmaCadastro" ).attr( "href", "inicio.html" );
+			}
+		}
+	}
+}

@@ -28,54 +28,54 @@
       
       <div class="col-md-4">
 
-      	<form name="f1">
+      	<form id="formCadastro" name="formCadastro">
       		<div class="form-group">
       			<label for="inputPergunta">Insira a pergunta</label>
       			<div class="input-group">
                		<span class="input-group-addon"><span class="glyphicon glyphicon-question-sign"></span></span>
-                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+                	<input type="text" class="form-control" name="question" placeholder="Pergunta">
        			</div>
     		</div>
 
     		<div class="form-group">
       			<label for="inputQ1">Insira a primeira alternativa</label>
       			<div class="input-group">
-               		<span class="input-group-addon">1</span>
-                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+               		<span class="input-group-addon"><b>1</b></span>
+                	<input type="text" class="form-control" name="alt1" placeholder="Alternativa 1">
        			</div>
     		</div>
 
     		<div class="form-group">
       			<label for="inputQ2">Insira a segunda alternativa</label>
       			<div class="input-group">
-               		<span class="input-group-addon">2</span>
-                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+               		<span class="input-group-addon"><b>2</b></span>
+                	<input type="text" class="form-control" name="alt2" placeholder="Alternativa 2">
        			</div>
     		</div>
 
     		<div class="form-group">
       			<label for="inputQ3">Insira a terceira alternativa</label>
       			<div class="input-group">
-               		<span class="input-group-addon">3</span>
-                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+               		<span class="input-group-addon"><b>3</b></span>
+                	<input type="text" class="form-control" name="alt3" placeholder="Alternativa 3">
        			</div>
     		</div>
 
     		<div class="form-group">
       			<label for="inputQ4">Insira a quarta alternativa</label>
       			<div class="input-group">
-               		<span class="input-group-addon">4</span>
-                	<input type="text" class="form-control" name="nome" placeholder="Pergunta">
+               		<span class="input-group-addon"><b>4</b></span>
+                  <input type="text" class="form-control" name="alt4" placeholder="Alternativa 4">
        			</div>
     		</div>
 
     		<div class="form-group">
     			<label for="inputRespostaCorreta">Qual alternativa correta?</label>
     			<div class="input-group text-center">
-    				<input type="radio" name="alternativa1" value="alt1"> Alternativa 1<br>
-        			<input type="radio" name="alternativa2" value="alt2"> Alternativa 2<br>
-        			<input type="radio" name="alternativa3" value="alt3"> Alternativa 3<br>
-        			<input type="radio" name="alternativa4" value="alt4"> Alternativa 4
+    				  <input type="radio" name="alternativas" value="alt1"> Alternativa 1<br>
+        			<input type="radio" name="alternativas" value="alt2"> Alternativa 2<br>
+        			<input type="radio" name="alternativas" value="alt3"> Alternativa 3<br>
+        			<input type="radio" name="alternativas" value="alt4"> Alternativa 4
     			</div>
     		</div>
     		<div>
@@ -84,10 +84,10 @@
     		</div>
 
     		<div>
-    			<a id="botaoCheck" href="avaliacaoPergunta.html" class="btn btn-default btn-lg" onclick='testAlert()'><span class="glyphicon glyphicon-floppy-disk"></span>Cadastrar pergunta</a><br>
+    			<a id="botaoConfirmaCadastro" href="" class="btn btn-default btn-lg" onclick='testCadastroPergunta()'><span class="glyphicon glyphicon-floppy-disk"></span> Cadastrar pergunta</a><br>
 
         		<a href="inicio.html" class="btn btn-default btn-lg" onclick=''>
-          		<span class="glyphicon glyphicon-remove"></span>Cancelar e voltar ao Início</a>
+          		<span class="glyphicon glyphicon-remove"></span> Cancelar e voltar ao Início</a>
     		</div>
       	</form>
 
