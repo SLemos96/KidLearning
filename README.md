@@ -1,7 +1,7 @@
 # KidLearning
 ## Projeto final da disciplina de PINU - Professor Leonardo
 #### Link para análise em vídeo do protótipo feito até a data de hoje (29.05.2017)
-#### [KidLearning - Youtube](link "https://youtu.be/UrrDi7vtcyE")
+#### [KidLearning - Youtube](https://youtu.be/UrrDi7vtcyE)
 
 ### Tela de início: 
   inicio.html
