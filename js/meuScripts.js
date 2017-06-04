@@ -47,7 +47,14 @@ function testAlert(){
 	}
 	else
 	{
-		$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
+		if ($('input[name=resposta]:checked', '#formResposta').val() == "alt3") {
+			alert("Alternativa correta!");
+			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
+		}
+		else{
+			alert("Alternativa errada!");
+			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
+		}
 	}
 }
 
@@ -88,5 +95,52 @@ function testCadastroPergunta(){
 				$( "#botaoConfirmaCadastro" ).attr( "href", "inicio.html" );
 			}
 		}
+	}
+}
+
+function carregaUsuarios() {
+    axios.get('http://rest.learncode.academy/api/KidLearning/users')
+        .then(function (response) {
+            console.log(response);
+            document.getElementById("usuarios").innerHTML = response.data[1].nome;
+            array = response;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function carregaBanco(){ //função pra preencher o banco de dados caso ele seja apagado
+
+}
+
+function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
+	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas/', {
+    	pergunta: 'Fred',
+    	alternativa1: 'Flintstone',
+    	alternativa2: 'Flintstone',
+    	alternativa3: 'Flintstone',
+    	alternativa4: 'Flintstone',
+    	alterativaCorreta: 'alt1', //valor da alternativa
+    	foto: 'teste'
+  	})
+  	.then(function (response) {
+    	console.log(response);
+  	})
+  	.catch(function (error) {
+    	console.log(error);
+  	});
+}
+
+var i=0;
+
+function alerta(){
+	if (array.data[i] == null) {
+		alert("Acabaram os dados")
+		i=0;
+	}
+	else{
+		alert(array.data[i].id);
+		i++;
 	}
 }
