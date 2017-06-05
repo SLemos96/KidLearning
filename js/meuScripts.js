@@ -91,8 +91,8 @@ function testCadastroPergunta(){
 				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 			}
 			else{
-				alert("Pergunta cadastrada com sucesso! Equipe #KL");
-				$( "#botaoConfirmaCadastro" ).attr( "href", "inicio.html" );
+				cadastraPergunta(); //chamando a função de cadastrar a pergunta;
+				
 			}
 		}
 	}
@@ -114,22 +114,28 @@ function carregaBanco(){ //função pra preencher o banco de dados caso ele seja
 
 }
 
+var idPergunta = 0;
+
 function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
-	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas/', {
-    	pergunta: 'Fred',
-    	alternativa1: 'Flintstone',
-    	alternativa2: 'Flintstone',
-    	alternativa3: 'Flintstone',
-    	alternativa4: 'Flintstone',
-    	alterativaCorreta: 'alt1', //valor da alternativa
+	alert("aa");
+	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas', {
+		_id: idPergunta,
+    	pergunta: 'Qual cor da maçã vista na foto?',
+    	alternativa1: 'Azul',
+    	alternativa2: 'Rosa',
+    	alternativa3: 'Amarela',
+    	alternativa4: 'Vermelha',
+    	alterativaCorreta: 'alt4', //valor da alternativa correta
     	foto: 'teste'
   	})
   	.then(function (response) {
     	console.log(response);
-  	})
+    	$( "#botaoConfirmaCadastro" ).attr( "href", "inicio.html" );
+		alert("Pergunta cadastrada com sucesso! Equipe #KL");})
   	.catch(function (error) {
     	console.log(error);
   	});
+  	alert("bb");
 }
 
 var i=0;
