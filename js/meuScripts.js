@@ -6,6 +6,20 @@ var _alternativa4;
 var _alterativaCorreta;
 var _foto;
 var _qualidadePergunta; // variavel referente à aceitação da pergunta
+var idPergunta;
+var i=0;
+
+function atualizaData() {
+    axios.get('http://rest.learncode.academy/api/KidLearning/data')
+        .then(function (response) {
+            console.log(response);
+            idPergunta = response.data[0]._idPergunta;
+            arrayUsers = response; //local onde ficam armazenados os dados de /users
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 function testAlert(){
 	if($('input[name=resposta]:checked', '#formResposta').val() == null)
@@ -87,8 +101,10 @@ function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/per
     alterativaCorreta: _alterativaCorreta, //valor da alternativa correta
     foto: _foto
   }).then(function (response) {
+  	idPergunta++;
     window.location.href="./inicio.html"
   });
+  atualizaDados();
 }
 
 function carregaUsuarios() {
@@ -102,9 +118,6 @@ function carregaUsuarios() {
             console.log(error);
         });
 }
-
-var idPergunta = 0;
-var i=0;
 
 /*function atualizaDados(){ //atualiza quantidade de dados para manter atualizado o id
     axios.post('http://rest.learncode.academy/api/KidLearning/data/', {
