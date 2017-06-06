@@ -1,43 +1,11 @@
-function validarSenha(){
-	idade = document.f1.idade.value
- 
-	if (idade >= 18)
-	{
-		$(document).ready(function()
-		{
-			$('span.classeExtra').removeClass("glyphicon-minus");
-			$('span.classeExtra2').removeClass(" glyphicon-remove ");
-			$('div.classeExtra').removeClass("has-error");
-       		$('div.classeExtra').addClass("has-success");
-       		$('span.classeExtra2').addClass(" glyphicon-ok ");
-		});
-
-
-		// http://ruancarlos.com.br/Blog/adicionando-linhas-em-uma-tabela-dinamicamente/
-		tabelaa = document.getElementById('questao8');
-
-		var novaLinha = tabelaa.insertRow(-1);
-        var novaCelula;
-
-        novaCelula = novaLinha.insertCell(0);
-        novaCelula.innerHTML = document.f1.nome.value;
-        novaCelula = novaLinha.insertCell(1);
-        novaCelula.innerHTML = document.f1.idade.value;
-        novaCelula = novaLinha.insertCell(2);
-        novaCelula.innerHTML = document.f1.sexo.value;
-	}
-	else
-	{
-		$(document).ready(function()
-		{
-			$('span.classeExtra').removeClass("glyphicon-minus");
-			$('span.classeExtra2').removeClass(" glyphicon-ok ");
-			$('div.classeExtra').removeClass("has-success");
-       		$('div.classeExtra').addClass("has-error");
-       		$('span.classeExtra2').addClass(" glyphicon-remove ");
-		});
-	}
-}
+var _pergunta;
+var _alternativa1;
+var _alternativa2;
+var _alternativa3;
+var _alternativa4;
+var _alterativaCorreta;
+var _foto;
+var _qualidadePergunta; // variavel referente à aceitação da pergunta
 
 function testAlert(){
 	if($('input[name=resposta]:checked', '#formResposta').val() == null)
@@ -91,11 +59,39 @@ function testCadastroPergunta(){
 				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 			}
 			else{
-				cadastraPergunta(); //chamando a função de cadastrar a pergunta;
-				
+				carregaDadosPergunta(); //chamando a função de cadastrar a pergunta;
 			}
 		}
 	}
+}
+
+function carregaDadosPergunta(){
+	_pergunta = document.formCadastro.question.value;
+	_alternativa1 = document.formCadastro.alt1.value;
+	_alternativa2 = document.formCadastro.alt2.value;
+	_alternativa3 = document.formCadastro.alt3.value;
+	_alternativa4 = document.formCadastro.alt4.value;
+	_alterativaCorreta = $('input[name=alternativas]:checked', '#formCadastro').val();
+	_foto = "aaa"; // alterar para inserir o caminho da foto
+	cadastraPergunta();
+}
+
+function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
+	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas', {
+    _id: idPergunta,
+    pergunta: _pergunta,
+    alternativa1: _alternativa1,
+    alternativa2: _alternativa2,
+    alternativa3: _alternativa3,
+    alternativa4: _alternativa4,
+    alterativaCorreta: _alterativaCorreta, //valor da alternativa correta
+    foto: _foto
+  }).then(function (response) {
+    window.location.href="./inicio.html"
+  })
+  .catch(function (error) {
+    	console.log(error);
+	});
 }
 
 function carregaUsuarios() {
@@ -103,50 +99,42 @@ function carregaUsuarios() {
         .then(function (response) {
             console.log(response);
             document.getElementById("usuarios").innerHTML = response.data[1].nome;
-            array = response;
+            arrayUsers = response; //local onde ficam armazenados os dados de /users
         })
         .catch(function (error) {
             console.log(error);
         });
 }
 
-function carregaBanco(){ //função pra preencher o banco de dados caso ele seja apagado
-
-}
-
 var idPergunta = 0;
-
-function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
-	alert("aa");
-	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas', {
-		_id: idPergunta,
-    	pergunta: 'Qual cor da maçã vista na foto?',
-    	alternativa1: 'Azul',
-    	alternativa2: 'Rosa',
-    	alternativa3: 'Amarela',
-    	alternativa4: 'Vermelha',
-    	alterativaCorreta: 'alt4', //valor da alternativa correta
-    	foto: 'teste'
-  	})
-  	.then(function (response) {
-    	console.log(response);
-    	$( "#botaoConfirmaCadastro" ).attr( "href", "inicio.html" );
-		alert("Pergunta cadastrada com sucesso! Equipe #KL");})
-  	.catch(function (error) {
-    	console.log(error);
-  	});
-  	alert("bb");
-}
-
 var i=0;
 
+/*function atualizaDados(){ //atualiza quantidade de dados para manter atualizado o id
+    axios.post('http://rest.learncode.academy/api/KidLearning/data/', {
+		_idAlunos = 0, //quantidade de alunos-1
+		_idProfesores = 0, //quantidade de professores-1
+		_idAvaliadores = 0, //quantidade de avaliadores-1
+		_idPergunta = idPergunta
+  	})
+  	.then(function (response) {
+  		alert("Dados atualizados");
+    	console.log(response.data);
+  	})
+  	.catch(function (error) {
+    	console.log(error);
+	});
+}*/
+
+
+
+
 function alerta(){
-	if (array.data[i] == null) {
+	if (arrayUsers.data[i] == null) {
 		alert("Acabaram os dados")
 		i=0;
 	}
 	else{
-		alert(array.data[i].id);
+		alert(arrayUsers.data[i].id);
 		i++;
 	}
 }
