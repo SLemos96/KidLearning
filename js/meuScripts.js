@@ -129,6 +129,7 @@ function alerta(){
 	if (arrayUsers.data[i] == null) {
 		alert("Acabaram os dados")
 		i=0;
+		$( "#corpo" ).attr( "onmousemove", "" );
 	}
 	else{
 		alert(arrayUsers.data[i].id);
