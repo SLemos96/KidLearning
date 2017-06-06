@@ -88,10 +88,7 @@ function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/per
     foto: _foto
   }).then(function (response) {
     window.location.href="./inicio.html"
-  })
-  .catch(function (error) {
-    	console.log(error);
-	});
+  });
 }
 
 function carregaUsuarios() {
