@@ -18,3 +18,12 @@ Professor cadastra a pergunta;
 
 ## Segundo cenário:
 Usuários avaliam a pergunta;
+
+## Terceiro cenário:
+Modo de jogo clássico;
+
+## Quarto cenário:
+Modo de jogo contra-relógio;
+
+## Quinto cenário:
+Sala do Doutor - Avaliação da aptidão do aluno, levando em consideração porcentagem de acertos;
