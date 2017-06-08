@@ -91,8 +91,12 @@ function carregaDadosPergunta(){
 }
 
 function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
+
+	atualizaDados();
+	atualizaData();
+
 	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas', {
-    _id: idPergunta,
+    _id: String(idPergunta),
     pergunta: _pergunta,
     alternativa1: _alternativa1,
     alternativa2: _alternativa2,
@@ -102,9 +106,46 @@ function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/per
     foto: _foto
   }).then(function (response) {
   	idPergunta++;
+  	console.log(idPergunta);
     window.location.href="./inicio.html"
   });
   atualizaDados();
+}
+
+function atualizaDados(){ //atualiza quantidade de dados para manter atualizado o id
+
+	console.log("Valor do idPergunta: "+idPergunta+"\n");
+    
+	$.ajax({
+	  type: 'PUT',
+	  data: {
+	  	_idAlunos: 0, //quantidade de alunos-1
+		_idProfesores: 0, //quantidade de professores-1
+		_idAvaliadores: 0, //quantidade de avaliadores-1
+		_idPergunta: idPergunta
+	},
+	  url: 'http://rest.learncode.academy/api/johnbob/friends/1',
+	  success: function() {
+	    //no data...just a success (200) status code
+	    console.log('Friend Updated Successfully!');
+	  }
+	});
+
+	atualizaData();
+
+    /*axios.put('http://rest.learncode.academy/api/KidLearning/data/59360ba6704f430100a99a65', {
+		_idAlunos: 0, //quantidade de alunos-1
+		_idProfesores: 0, //quantidade de professores-1
+		_idAvaliadores: 0, //quantidade de avaliadores-1
+		_idPergunta: idPergunta.data
+  	})
+  	.then(function (response) {
+  		console.log("Dados atualizados");
+    	console.log(response.data);
+  	})
+  	.catch(function (error) {
+    	console.log(error);
+	});*/
 }
 
 function carregaUsuarios() {
@@ -117,28 +158,22 @@ function carregaUsuarios() {
         .catch(function (error) {
             console.log(error);
         });
+
+    axios.get('http://rest.learncode.academy/api/KidLearning/data')
+        .then(function (response) {
+            console.log(response.data);
+            idPergunta = response.data[0]._idPergunta;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
-/*function atualizaDados(){ //atualiza quantidade de dados para manter atualizado o id
-    axios.post('http://rest.learncode.academy/api/KidLearning/data/', {
-		_idAlunos = 0, //quantidade de alunos-1
-		_idProfesores = 0, //quantidade de professores-1
-		_idAvaliadores = 0, //quantidade de avaliadores-1
-		_idPergunta = idPergunta
-  	})
-  	.then(function (response) {
-  		alert("Dados atualizados");
-    	console.log(response.data);
-  	})
-  	.catch(function (error) {
-    	console.log(error);
-	});
-}*/
 
 
 
 
-function alerta(){
+/*function alerta(){
 	if (arrayUsers.data[i] == null) {
 		alert("Acabaram os dados")
 		i=0;
@@ -148,4 +183,4 @@ function alerta(){
 		alert(arrayUsers.data[i].id);
 		i++;
 	}
-}
+}*/
