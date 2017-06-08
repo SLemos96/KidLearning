@@ -48,7 +48,7 @@ function testAlert(){
 	}
 	else
 	{
-		if ($('input[name=resposta]:checked', '#formResposta').val() == "alt3") {
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[0].alterativaCorreta) {
 			alert("Alternativa correta!");
 			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
 		}
@@ -65,6 +65,38 @@ function naoAprova(){
 
 function aprova(){
 	alert("Você aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
+	root = arrayPerguntas.id;
+	popPergunta += arrayPerguntas[0].popularidadePergunta;
+
+	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
+        .then(function (response) {
+            console.log(response);
+            arrayPerguntas = response.data;
+            console.log(arrayPerguntas[0]);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+	$.ajax({
+	  type: 'PUT',
+	  data: {
+	  	_id: String(idPergunta),
+	    pergunta: arrayPerguntas.pergunta,
+	    alternativa1: arrayPerguntas[0].alternativa1,
+	    alternativa2: arrayPerguntas[0].alternativa2,
+	    alternativa3: arrayPerguntas[0].alternativa3,
+	    alternativa4: arrayPerguntas[0].alternativa4,
+	    alterativaCorreta: arrayPerguntas[0].alterativaCorreta, //valor da alternativa correta
+	    popularidadePergunta: popPergunta,
+	    foto: arrayPerguntas[0].foto
+	  },
+	  url: 'http://rest.learncode.academy/api/KidLearning/perguntas/'+ String(arrayPerguntas[0].id),
+	  success: function() {
+	    //no data...just a success (200) status code
+	    console.log('Friend Updated Successfully!');
+  }
+});
 }
 
 function testCadastroPergunta(){
@@ -115,18 +147,18 @@ function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/per
 	atualizaData();
 
 	axios.post('http://rest.learncode.academy/api/KidLearning/perguntas', {
-    _id: String(idPergunta),
-    pergunta: _pergunta,
-    alternativa1: _alternativa1,
-    alternativa2: _alternativa2,
-    alternativa3: _alternativa3,
-    alternativa4: _alternativa4,
-    alterativaCorreta: _alterativaCorreta, //valor da alternativa correta
-    foto: _foto
+	    _id: String(idPergunta),
+	    pergunta: _pergunta,
+	    alternativa1: _alternativa1,
+	    alternativa2: _alternativa2,
+	    alternativa3: _alternativa3,
+	    alternativa4: _alternativa4,
+	    alterativaCorreta: _alterativaCorreta, //valor da alternativa correta
+	    foto: _foto
   }).then(function (response) {
-  	idPergunta++;
-  	console.log(idPergunta);
-    window.location.href="./inicio.html"
+	  	idPergunta++;
+	  	console.log(idPergunta);
+	    window.location.href="./inicio.html"
   });
   atualizaDados();
 }

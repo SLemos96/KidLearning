@@ -14,13 +14,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/meuStylos.css">
     <script src="js/meuScripts.js" type="text/javascript"></script>
+    <script src="js/cronometroScript.js" type="text/javascript"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body>
+<body onload="inserirPergunta()">
 
 <div class="container-fluid bg-1 text-center">
-  <h3>Pergunta complexa é uma falácia que consiste em fazer uma insinuação na forma de pergunta. Dois tópicos sem relação, ou de relação duvidosa, são conjugados e tratados como uma única proposição. Pretende-se que o auditório aceite ou rejeite ambas quando, de facto, uma pode ser aceitável e a outra não. Trata-se de um uso abusivo do operador "e".</h3>
+  <h3 id="pergunta"></h3>
+  <h4 id="tempo"></h4>
 </div>
 
   <div class="container-fluid text-center">
@@ -32,10 +34,10 @@
       
       <div class="col-md-4">
       <form id="formResposta" class="formulario" name="questao" action="">
-        <input type="radio" name="resposta" value="alt1"> Alternativa 1<br>
-        <input type="radio" name="resposta" value="alt2"> Alternativa 2<br>
-        <input type="radio" name="resposta" value="alt3"> Alternativa 3<br>
-        <input type="radio" name="resposta" value="alt4"> Alternativa 4
+        <input type="radio" name="resposta" value="alt1"><span id="alt1" ></span><br>
+        <input type="radio" name="resposta" value="alt2"><span id="alt2" ></span><br>
+        <input type="radio" name="resposta" value="alt3"><span id="alt3" ></span><br>
+        <input type="radio" name="resposta" value="alt4"><span id="alt4" ></span><br>
       </form>
 
       <div class="botoes container-fluid text-center">
