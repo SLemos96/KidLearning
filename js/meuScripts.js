@@ -21,6 +21,25 @@ function atualizaData() {
         });
 }
 
+function testCorretude(){
+	if($('input[name=resposta]:checked', '#formResposta').val() == null)
+	{
+		alert("Por favor, insira uma resposta correta!");
+		$( "#botaoCheck" ).attr( "href", "#" );
+	}
+	else
+	{
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[0].alterativaCorreta) {
+			alert("Alternativa correta!");
+			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+		}
+		else{
+			alert("Alternativa errada!");
+			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+		}
+	}
+}
+
 function testAlert(){
 	if($('input[name=resposta]:checked', '#formResposta').val() == null)
 	{
@@ -163,6 +182,22 @@ function carregaUsuarios() {
         .then(function (response) {
             console.log(response.data);
             idPergunta = response.data[0]._idPergunta;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function inserirPergunta(){
+	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
+        .then(function (response) {
+            console.log(response);
+            document.getElementById("pergunta").innerHTML = response.data[0].pergunta;
+            document.getElementById("alt1").innerHTML = response.data[0].alternativa1;
+            document.getElementById("alt2").innerHTML = response.data[0].alternativa2;
+            document.getElementById("alt3").innerHTML = response.data[0].alternativa3;
+            document.getElementById("alt4").innerHTML = response.data[0].alternativa4;
+            arrayPerguntas = response.data;
         })
         .catch(function (error) {
             console.log(error);
