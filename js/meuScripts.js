@@ -16,7 +16,7 @@ function atualizaData() {
     axios.get('http://rest.learncode.academy/api/KidLearning/data')
         .then(function (response) {
             console.log(response);
-            idPergunta = response.data[0]._idPergunta;
+            idPergunta = response.data[indiceAleatorioPergunta]._idPergunta;
             arrayUsers = response; //local onde ficam armazenados os dados de /users
         })
         .catch(function (error) {
@@ -69,13 +69,13 @@ function naoAprova(){
 function aprova(){
 	alert("Você aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
 	root = arrayPerguntas.id;
-	popPergunta += arrayPerguntas[0].popularidadePergunta;
+	popPergunta += arrayPerguntas[indiceAleatorioPergunta].popularidadePergunta;
 
 	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
         .then(function (response) {
             console.log(response);
             arrayPerguntas = response.data;
-            console.log(arrayPerguntas[0]);
+            console.log(arrayPerguntas[indiceAleatorioPergunta]);
         })
         .catch(function (error) {
             console.log(error);
@@ -85,16 +85,16 @@ function aprova(){
 	  type: 'PUT',
 	  data: {
 	  	_id: String(idPergunta),
-	    pergunta: arrayPerguntas[0].pergunta,
-	    alternativa1: arrayPerguntas[0].alternativa1,
-	    alternativa2: arrayPerguntas[0].alternativa2,
-	    alternativa3: arrayPerguntas[0].alternativa3,
-	    alternativa4: arrayPerguntas[0].alternativa4,
-	    alterativaCorreta: arrayPerguntas[0].alterativaCorreta, //valor da alternativa correta
+	    pergunta: arrayPerguntas[indiceAleatorioPergunta].pergunta,
+	    alternativa1: arrayPerguntas[indiceAleatorioPergunta].alternativa1,
+	    alternativa2: arrayPerguntas[indiceAleatorioPergunta].alternativa2,
+	    alternativa3: arrayPerguntas[indiceAleatorioPergunta].alternativa3,
+	    alternativa4: arrayPerguntas[indiceAleatorioPergunta].alternativa4,
+	    alterativaCorreta: arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta, //valor da alternativa correta
 	    popularidadePergunta: popPergunta,
-	    foto: arrayPerguntas[0].foto
+	    foto: arrayPerguntas[indiceAleatorioPergunta].foto
 	  },
-	  url: 'http://rest.learncode.academy/api/KidLearning/perguntas/'+ String(arrayPerguntas[0].id),
+	  url: 'http://rest.learncode.academy/api/KidLearning/perguntas/'+ String(arrayPerguntas[indiceAleatorioPergunta].id),
 	  success: function() {
 	    //no data...just a success (200) status code
 	    console.log('Friend Updated Successfully!');
@@ -224,14 +224,15 @@ function carregaUsuarios() {
 }
 
 function inserirPergunta(){
+	contaPerguntas();
 	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
         .then(function (response) {
             console.log(response);
-            document.getElementById("pergunta").innerHTML = response.data[0].pergunta;
-            document.getElementById("alt1").innerHTML = response.data[0].alternativa1;
-            document.getElementById("alt2").innerHTML = response.data[0].alternativa2;
-            document.getElementById("alt3").innerHTML = response.data[0].alternativa3;
-            document.getElementById("alt4").innerHTML = response.data[0].alternativa4;
+            document.getElementById("pergunta").innerHTML = response.data[indiceAleatorioPergunta].pergunta;
+            document.getElementById("alt1").innerHTML = response.data[indiceAleatorioPergunta].alternativa1;
+            document.getElementById("alt2").innerHTML = response.data[indiceAleatorioPergunta].alternativa2;
+            document.getElementById("alt3").innerHTML = response.data[indiceAleatorioPergunta].alternativa3;
+            document.getElementById("alt4").innerHTML = response.data[indiceAleatorioPergunta].alternativa4;
             arrayPerguntas = response.data;
         })
         .catch(function (error) {
@@ -259,7 +260,6 @@ function contaPerguntas(){
 
 function geraIndiceAleatorio(){
 	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
-	alert(indiceAleatorioPergunta);
 }
 
 
