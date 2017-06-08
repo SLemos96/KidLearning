@@ -8,6 +8,9 @@ var _foto;
 var _qualidadePergunta; // variavel referente à aceitação da pergunta
 var idPergunta;
 var i=0;
+var qtdPerguntas; //quantidade de perguntas cadastradas
+var arrayPerguntas = [];
+var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 
 function atualizaData() {
     axios.get('http://rest.learncode.academy/api/KidLearning/data')
@@ -82,7 +85,7 @@ function aprova(){
 	  type: 'PUT',
 	  data: {
 	  	_id: String(idPergunta),
-	    pergunta: arrayPerguntas.pergunta,
+	    pergunta: arrayPerguntas[0].pergunta,
 	    alternativa1: arrayPerguntas[0].alternativa1,
 	    alternativa2: arrayPerguntas[0].alternativa2,
 	    alternativa3: arrayPerguntas[0].alternativa3,
@@ -236,7 +239,28 @@ function inserirPergunta(){
         });
 }
 
+function contaPerguntas(){
+	i=0;
+	qtdPerguntas=0;
 
+	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
+        .then(function (response) {
+            console.log(response);
+            qtdPerguntas = response.data.length;
+            arrayPerguntas = response.data;
+            geraIndiceAleatorio();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        //alert(qtdPerguntas);
+        
+}
+
+function geraIndiceAleatorio(){
+	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
+	alert(indiceAleatorioPergunta);
+}
 
 
 
