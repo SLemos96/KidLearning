@@ -32,7 +32,7 @@ function testCorretude(){
 	}
 	else
 	{
-		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[0].alterativaCorreta) {
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
 			alert("Alternativa correta!");
 			$( "#botaoCheck" ).attr( "href", "inicio.html" );
 		}
@@ -51,7 +51,7 @@ function testAlert(){
 	}
 	else
 	{
-		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[0].alterativaCorreta) {
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
 			alert("Alternativa correta!");
 			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
 		}
