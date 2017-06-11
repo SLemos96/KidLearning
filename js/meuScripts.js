@@ -11,6 +11,12 @@ var i=0;
 var qtdPerguntas; //quantidade de perguntas cadastradas
 var arrayPerguntas = [];
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
+var linkFoto = null;
+
+function armazenaLinkFoto(res){
+	console.log("Chegou aqui!e o link é esse: " + res);
+	linkFoto = res;
+}
 
 function atualizaData() {
     axios.get('http://rest.learncode.academy/api/KidLearning/data')
@@ -109,7 +115,7 @@ function testCadastroPergunta(){
 	alternativa3 = document.formCadastro.alt3.value;
 	alternativa4 = document.formCadastro.alt4.value;
 
-	foto = document.formCadastro.foto.value;
+	//foto = document.formCadastro.foto.value;
 	if(pergunta == "" || alternativa1 == "" || alternativa2 == "" || alternativa3 == "" || alternativa4 == "")
 	{
 		alert("Por favor, insira os dados corretamente!");
@@ -122,7 +128,7 @@ function testCadastroPergunta(){
 			$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 		}
 		else{
-			if(foto == ""){
+			if(linkFoto == null){
 				alert("Por favor, insira uma foto correspondente!");
 				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 			}
@@ -140,7 +146,7 @@ function carregaDadosPergunta(){
 	_alternativa3 = document.formCadastro.alt3.value;
 	_alternativa4 = document.formCadastro.alt4.value;
 	_alterativaCorreta = $('input[name=alternativas]:checked', '#formCadastro').val();
-	_foto = "aaa"; // alterar para inserir o caminho da foto
+	_foto = linkFoto;
 	cadastraPergunta();
 }
 
@@ -233,6 +239,7 @@ function inserirPergunta(){
             document.getElementById("alt2").innerHTML = response.data[indiceAleatorioPergunta].alternativa2;
             document.getElementById("alt3").innerHTML = response.data[indiceAleatorioPergunta].alternativa3;
             document.getElementById("alt4").innerHTML = response.data[indiceAleatorioPergunta].alternativa4;
+            document.getElementById("fotoPergunta").src = response.data[indiceAleatorioPergunta].foto;
             arrayPerguntas = response.data;
         })
         .catch(function (error) {
