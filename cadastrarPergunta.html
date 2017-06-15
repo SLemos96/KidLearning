@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/meuStylos.css">
     <script src="js/meuScripts.js" type="text/javascript"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="css/imgur.css" rel="stylesheet" media="screen">
 </head>
 
 <body>
@@ -83,7 +84,7 @@
     		</div>
     		<div>
     			<label for="inputFoto">Insira aqui sua foto</label>
-    			<input type="file" name="foto"/><br>
+    			<div class="dropzone"></div>
     		</div>
 
     		<div>
@@ -105,6 +106,24 @@
   
 
 </div>
+
+  <script src="js/imgur.js"></script>
+  <script>
+      //desenvolvido a partir do tutorial "https://github.com/pinceladasdaweb/imgur"
+      //e com o auxílio de Jânio Xavier "https://github.com/janioxavier"
+      var callback = function (res) {
+          if (res.success === true) {
+              console.log(res.data.link);
+              linkFoto = res.data.link;
+              armazenaLinkFoto(res.data.link);
+          }
+      };
+
+      new Imgur({
+          clientid: 'b9072e4e32e4f24',
+          callback: callback
+      });
+  </script>
 
 </body>
 </html>
