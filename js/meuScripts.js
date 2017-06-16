@@ -11,6 +11,7 @@ var i=0;
 var qtdPerguntas; //quantidade de perguntas cadastradas
 var arrayPerguntas = [];
 var arrayUsers = [];
+var usuarioLogado;
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 var linkFoto = null;
 
@@ -304,6 +305,70 @@ function geraIndiceAleatorio(){
 	}
 }*/
 
+function testCadastroUsuario(){
+	pergunta = document.formCadastro.question.value;
+	alternativa1 = document.formCadastro.alt1.value;
+	alternativa2 = document.formCadastro.alt2.value;
+	alternativa3 = document.formCadastro.alt3.value;
+	alternativa4 = document.formCadastro.alt4.value;
+
+	//foto = document.formCadastro.foto.value;
+	if(pergunta == "" || alternativa1 == "" || alternativa2 == "" || alternativa3 == "" || alternativa4 == "")
+	{
+		alert("Por favor, insira os dados corretamente!");
+		$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+	}
+	else
+	{
+		if($('input[name=alternativas]:checked', '#formCadastro').val() == null){
+			alert("Por favor, insira uma alternativa de resposta!");
+			$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+		}
+		else{
+			if(linkFoto == null){
+				alert("Por favor, insira uma foto correspondente!");
+				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+			}
+			else{
+				carregaDadosPergunta(); //chamando a função de cadastrar a pergunta;
+			}
+		}
+	}
+}
+
+function carregaDadosCadUsuario(){
+	_pergunta = document.formCadastro.question.value;
+	_alternativa1 = document.formCadastro.alt1.value;
+	_alternativa2 = document.formCadastro.alt2.value;
+	_alternativa3 = document.formCadastro.alt3.value;
+	_alternativa4 = document.formCadastro.alt4.value;
+	_alterativaCorreta = $('input[name=alternativas]:checked', '#formCadastro').val();
+	_foto = linkFoto;
+	cadastraPergunta();
+}
+
+function cadastraUsuario(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
+
+	atualizaDados();
+	atualizaData();
+
+	axios.post('http://rest.learncode.academy/api/KidLearning/users', {
+	    _id: String(idPergunta),
+	    pergunta: _pergunta,
+	    alternativa1: _alternativa1,
+	    alternativa2: _alternativa2,
+	    alternativa3: _alternativa3,
+	    alternativa4: _alternativa4,
+	    alterativaCorreta: _alterativaCorreta, //valor da alternativa correta
+	    foto: _foto
+  }).then(function (response) {
+	  	idPergunta++;
+	  	console.log(idPergunta);
+	    window.location.href="./inicio.html"
+  });
+  atualizaDados();
+}
+
 function testLogin(){
 	var logged = 0;
 	var username = document.formLogin.uname.value;
@@ -327,6 +392,7 @@ function testLogin(){
 			{
 				alert("LOGIN");
 				logged = 1;
+				usuarioLogado = arrayUsers[i];
 				window.location.replace("./inicio.html");
 			}
 		};
