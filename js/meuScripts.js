@@ -306,21 +306,21 @@ function geraIndiceAleatorio(){
 }*/
 
 function testCadastroUsuario(){
-	pergunta = document.formCadastro.question.value;
-	alternativa1 = document.formCadastro.alt1.value;
-	alternativa2 = document.formCadastro.alt2.value;
-	alternativa3 = document.formCadastro.alt3.value;
-	alternativa4 = document.formCadastro.alt4.value;
+	nome = document.formLogin.question.value;
+	username = document.formLogin.alt1.value;
+	password = document.formLogin.alt2.value;
+	email = document.formLogin.alt3.value;
+	alternativa4 = document.formLogin.alt4.value;
 
 	//foto = document.formCadastro.foto.value;
-	if(pergunta == "" || alternativa1 == "" || alternativa2 == "" || alternativa3 == "" || alternativa4 == "")
+	if(nome == "" || username == "" || password == "" || email == "" || alternativa4 == "")
 	{
 		alert("Por favor, insira os dados corretamente!");
 		$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 	}
 	else
 	{
-		if($('input[name=alternativas]:checked', '#formCadastro').val() == null){
+		if($('input[name=categorias]:checked', '#formLogin').val() == null){
 			alert("Por favor, insira uma alternativa de resposta!");
 			$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 		}
@@ -330,19 +330,19 @@ function testCadastroUsuario(){
 				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
 			}
 			else{
-				carregaDadosPergunta(); //chamando a função de cadastrar a pergunta;
+				carregaDadosCadUsuario(); //chamando a função de cadastrar a pergunta;
 			}
 		}
 	}
 }
 
 function carregaDadosCadUsuario(){
-	_pergunta = document.formCadastro.question.value;
-	_alternativa1 = document.formCadastro.alt1.value;
-	_alternativa2 = document.formCadastro.alt2.value;
-	_alternativa3 = document.formCadastro.alt3.value;
-	_alternativa4 = document.formCadastro.alt4.value;
-	_alterativaCorreta = $('input[name=alternativas]:checked', '#formCadastro').val();
+	_pergunta = document.formLogin.question.value;
+	_alternativa1 = document.formLogin.alt1.value;
+	_alternativa2 = document.formLogin.alt2.value;
+	_alternativa3 = document.formLogin.alt3.value;
+	_alternativa4 = document.formLogin.alt4.value;
+	_alterativaCorreta = $('input[name=alternativas]:checked', '#formLogin').val();
 	_foto = linkFoto;
 	cadastraPergunta();
 }
