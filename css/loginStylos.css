@@ -25,6 +25,12 @@ button:hover {
     opacity: 0.8;
 }
 
+#btLogin{
+    background-color: green;
+    color: white;
+    width: 100%;
+}
+
 .cancelbtn {
     width: auto;
     padding: 10px 18px;

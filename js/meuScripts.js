@@ -10,6 +10,7 @@ var idPergunta;
 var i=0;
 var qtdPerguntas; //quantidade de perguntas cadastradas
 var arrayPerguntas = [];
+var arrayUsers = [];
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 var linkFoto = null;
 
@@ -23,7 +24,6 @@ function atualizaData() {
         .then(function (response) {
             console.log(response);
             idPergunta = response.data[indiceAleatorioPergunta]._idPergunta;
-            arrayUsers = response; //local onde ficam armazenados os dados de /users
         })
         .catch(function (error) {
             console.log(error);
@@ -212,8 +212,8 @@ function carregaUsuarios() {
     axios.get('http://rest.learncode.academy/api/KidLearning/users')
         .then(function (response) {
             console.log(response);
-            document.getElementById("usuarios").innerHTML = response.data[1].nome;
-            arrayUsers = response; //local onde ficam armazenados os dados de /users
+            arrayUsers = response.data; //local onde ficam armazenados os dados de /users
+            console.log(arrayUsers);
         })
         .catch(function (error) {
             console.log(error);
@@ -303,3 +303,35 @@ function geraIndiceAleatorio(){
 		i++;
 	}
 }*/
+
+function testLogin(){
+	var logged = 0;
+	var username = document.formLogin.uname.value;
+	var senha = document.formLogin.psw.value;
+	if(username == "" || senha == "")
+	{
+		if(senha == "")
+		{
+			alert("Insira sua senha corretamente");
+			alert(arrayUsers.length);
+		}
+
+		if(username == "")
+		{
+			alert("Insira seu username corretamente");
+		}
+	}
+	else{
+		for (var i = 0; i < arrayUsers.length; i++) {
+			if(arrayUsers[i].username == username && arrayUsers[i].password == senha)
+			{
+				alert("LOGIN");
+				logged = 1;
+				window.location.replace("./inicio.html");
+			}
+		};
+		if(logged == 0){
+			alert("Usuário não encontrado!");
+		}
+	}
+}
