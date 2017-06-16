@@ -229,6 +229,24 @@ function carregaUsuarios() {
         });
 }
 
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          window.location.replace("./inicio.html");
+          
+        }
+    }, 1000);
+}
+
 function inserirPergunta(){
 	contaPerguntas();
 	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
@@ -245,6 +263,9 @@ function inserirPergunta(){
         .catch(function (error) {
             console.log(error);
         });
+
+    var display = document.querySelector('#time');
+    startTimer(30, display);
 }
 
 function contaPerguntas(){

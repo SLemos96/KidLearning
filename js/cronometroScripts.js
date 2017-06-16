@@ -11,6 +11,7 @@ function startTimer(duration, display) {
 
         if (--timer < 0) {
           alert("O tempo acabou");
+          window.location.replace("./inicio.html");
             timer = duration;
         }
     }, 1000);
