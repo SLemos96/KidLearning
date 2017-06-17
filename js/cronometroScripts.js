@@ -1,3 +1,5 @@
+var tempo;
+
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     setInterval(function () {
@@ -7,14 +9,21 @@ function startTimer(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
+        tempo = seconds;
+
         display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
           alert("O tempo acabou");
-          window.location.replace("./inicio.html");
+          contaPontuacao(0);
+          window.location.replace("./telaDeEsperaResultadoCR.html");
             timer = duration;
         }
     }, 1000);
+}
+
+function getTempo(){
+    return tempo;
 }
 
 window.onload = function () {
