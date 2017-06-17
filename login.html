@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="css/loginStylos.css">
+    <link rel="icon" type="image/png" href="imgs/favicon.png" />
+    <title>KidLearning</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/meuScripts.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<body>
+<body onload="carregaUsuarios()">
 
 <h2>KidLearning - Login</h2>
 
-<form action="/action_page.php">
+<form name="formLogin" id="formLogin">
   <div class="imgcontainer">
     <img src="imgs/img_avatar2.png" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
     <label><b>Username</b></label>
-    <input type="text" placeholder="Insira seu username" name="uname" required>
+    <input type="text" placeholder="Insira seu username" name="uname">
 
     <label><b>Senha</b></label>
-    <input type="password" placeholder="Insira sua senha" name="psw" required>
+    <input type="password" placeholder="Insira sua senha" name="psw">
         
-    <button type="submit">Login</button>
-    <input type="checkbox" checked="checked"> Remember me
+    <a id="btLogin" class="btn btn-default btn-lg" onclick='testLogin()'>
+          <span class="glyphicon glyphicon-ok"></span> Login
+        </a>
   </div>
 
   <div class="container" style="background-color:#f1f1f1">
-    <span class="psw">Forgot <a href="#">password?</a></span>
+    <span class="psw">Não tem login? <a href="./cadastro.html">Cadastre-se!</a></span>
   </div>
 </form>
 
