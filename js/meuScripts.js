@@ -14,6 +14,9 @@ var arrayUsers = [];
 var usuarioLogado;
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 var linkFoto = null;
+var valorPergunta = 1;
+var qtdAcertos = 0;
+var qtdPontos = 0;
 
 function armazenaLinkFoto(res){
 	console.log("Chegou aqui!e o link é esse: " + res);
@@ -41,13 +44,33 @@ function testCorretude(){
 	{
 		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
 			alert("Alternativa correta!");
-			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			valorPergunta++;
+			qtdAcertos++;
+			if(valorPergunta < 6){
+				inserirPergunta();
+			} else{
+				//contaPontuacao();
+				$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+				document.querySelector('#acertos').textContent = qtdAcertos;
+			}
 		}
 		else{
 			alert("Alternativa errada!");
-			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			valorPergunta++;
+			if(valorPergunta < 6){
+				inserirPergunta();
+			} else{
+				//contaPontuacao(getTempo());
+				$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+				document.getElementById("acertos").innerHTML = qtdAcertos;
+			}
 		}
 	}
+}
+
+function inserirPontoAcertos(){
+	document.getElementById("acertos").innerHTML = qtdAcertos;
+	document.getElementById("acertos").innerHTML = qtdPontos;
 }
 
 function testAlert(){
@@ -71,6 +94,7 @@ function testAlert(){
 
 function naoAprova(){
 	alert("Você não aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
+	//não aprovando a pergunta;
 }
 
 function aprova(){
@@ -253,7 +277,7 @@ function inserirPergunta(){
 	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
         .then(function (response) {
             console.log(response);
-            document.getElementById("pergunta").innerHTML = response.data[indiceAleatorioPergunta].pergunta;
+            document.getElementById("pergunta").innerHTML = valorPergunta + ". " + response.data[indiceAleatorioPergunta].pergunta;
             document.getElementById("alt1").innerHTML = response.data[indiceAleatorioPergunta].alternativa1;
             document.getElementById("alt2").innerHTML = response.data[indiceAleatorioPergunta].alternativa2;
             document.getElementById("alt3").innerHTML = response.data[indiceAleatorioPergunta].alternativa3;
@@ -265,8 +289,10 @@ function inserirPergunta(){
             console.log(error);
         });
 
-    var display = document.querySelector('#time');
-    startTimer(30, display);
+    if(valorPergunta == 1){
+	    var display = document.querySelector('#time');
+	    startTimer(30, display);
+    }
 }
 
 function contaPerguntas(){
@@ -291,7 +317,15 @@ function geraIndiceAleatorio(){
 	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
 }
 
+function contaPontuacao(_tempoRestante){
+	qtdPontos = (qtdAcertos * 300) - ((5 - qtdAcertos) * 50);
 
+	qtdPontos -= ((30 - _tempoRestante) * 50);
+	if(qtdPontos < 0){
+		qtdPontos = 0;
+	}
+	document.querySelector('#pontuacao').textContent = qtdPontos;
+}
 
 /*function alerta(){
 	if (arrayUsers.data[i] == null) {
