@@ -306,65 +306,81 @@ function geraIndiceAleatorio(){
 }*/
 
 function testCadastroUsuario(){
-	nome = document.formLogin.question.value;
-	username = document.formLogin.alt1.value;
-	password = document.formLogin.alt2.value;
-	email = document.formLogin.alt3.value;
-	alternativa4 = document.formLogin.alt4.value;
+	nome = document.formLogin.nome.value;
+	username = document.formLogin.uname.value;
+	password = document.formLogin.psw.value;
+	email = document.formLogin.email.value;
+	instituicao = document.formLogin.instituicao.value;
 
 	//foto = document.formCadastro.foto.value;
-	if(nome == "" || username == "" || password == "" || email == "" || alternativa4 == "")
+	if(nome == "" || username == "" || password == "" || email == "" || instituicao == "")
 	{
 		alert("Por favor, insira os dados corretamente!");
-		$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+		$( "#btLogin" ).attr( "href", "#" );
 	}
 	else
 	{
 		if($('input[name=categorias]:checked', '#formLogin').val() == null){
-			alert("Por favor, insira uma alternativa de resposta!");
-			$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
+			alert("Por favor, insira uma categoria!");
+			$( "#btLogin" ).attr( "href", "#" );
 		}
 		else{
-			if(linkFoto == null){
-				alert("Por favor, insira uma foto correspondente!");
-				$( "#botaoConfirmaCadastro" ).attr( "href", "#" );
-			}
-			else{
-				carregaDadosCadUsuario(); //chamando a função de cadastrar a pergunta;
-			}
+			carregaDadosCadUsuario(); //chamando a função de cadastrar a pergunta;
 		}
 	}
 }
 
 function carregaDadosCadUsuario(){
-	_pergunta = document.formLogin.question.value;
+	/*_pergunta = document.formLogin.question.value;
 	_alternativa1 = document.formLogin.alt1.value;
 	_alternativa2 = document.formLogin.alt2.value;
 	_alternativa3 = document.formLogin.alt3.value;
 	_alternativa4 = document.formLogin.alt4.value;
-	_alterativaCorreta = $('input[name=alternativas]:checked', '#formLogin').val();
-	_foto = linkFoto;
-	cadastraPergunta();
+	_alterativaCorreta = $('input[name=categorias]:checked', '#formLogin').val();*/
+
+	nome = document.formLogin.nome.value;
+	username = document.formLogin.uname.value;
+	password = document.formLogin.psw.value;
+	email = document.formLogin.email.value;
+	instituicao = document.formLogin.instituicao.value;
+	categoria = $('input[name=categorias]:checked', '#formLogin').val();
+
+	var Bdate = document.getElementById('bday').value;
+    var Bday = +new Date(Bdate);
+
+    idade = ~~ ((Date.now() - Bday) / (31557600000));
+
+    console.log("Nome: "+ nome);
+    console.log("\nUsername: "+ username);
+    console.log("\npassword: "+ password);
+    console.log("\nemail: "+ email);
+    console.log("\ninstituicao: "+ instituicao);
+    console.log("\ncategoria: "+ categoria);
+    console.log("\nidade: "+ idade);
+    alert("Pausa rápuda");
+
+
+	cadastraUsuario(nome, username, password, email, instituicao, categoria, idade);
 }
 
-function cadastraUsuario(){ //http://rest.learncode.academy/api/KidLearning/perguntas/
+function cadastraUsuario(_nome, _uname, _psw, _email, _instituicao, _cat, _idade){ //http://rest.learncode.academy/api/KidLearning/perguntas/
 
 	atualizaDados();
 	atualizaData();
 
 	axios.post('http://rest.learncode.academy/api/KidLearning/users', {
 	    _id: String(idPergunta),
-	    pergunta: _pergunta,
-	    alternativa1: _alternativa1,
-	    alternativa2: _alternativa2,
-	    alternativa3: _alternativa3,
-	    alternativa4: _alternativa4,
-	    alterativaCorreta: _alterativaCorreta, //valor da alternativa correta
-	    foto: _foto
+	    nome: _nome,
+	    username: _uname,
+	    password: _psw,
+	    email: _email,
+	    idade: _idade,
+	    categoria: _cat, //valor da alternativa correta
+	    instituicao: _instituicao
   }).then(function (response) {
 	  	idPergunta++;
 	  	console.log(idPergunta);
-	    window.location.href="./inicio.html"
+	    window.location.href="./login.html"
   });
   atualizaDados();
 }
