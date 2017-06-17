@@ -10,6 +10,8 @@ var idPergunta;
 var i=0;
 var qtdPerguntas; //quantidade de perguntas cadastradas
 var arrayPerguntas = [];
+var arrayUsers = [];
+var usuarioLogado;
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 var linkFoto = null;
 
@@ -23,7 +25,6 @@ function atualizaData() {
         .then(function (response) {
             console.log(response);
             idPergunta = response.data[indiceAleatorioPergunta]._idPergunta;
-            arrayUsers = response; //local onde ficam armazenados os dados de /users
         })
         .catch(function (error) {
             console.log(error);
@@ -212,8 +213,8 @@ function carregaUsuarios() {
     axios.get('http://rest.learncode.academy/api/KidLearning/users')
         .then(function (response) {
             console.log(response);
-            document.getElementById("usuarios").innerHTML = response.data[1].nome;
-            arrayUsers = response; //local onde ficam armazenados os dados de /users
+            arrayUsers = response.data; //local onde ficam armazenados os dados de /users
+            console.log(arrayUsers);
         })
         .catch(function (error) {
             console.log(error);
@@ -227,6 +228,24 @@ function carregaUsuarios() {
         .catch(function (error) {
             console.log(error);
         });
+}
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          window.location.replace("./inicio.html");
+          
+        }
+    }, 1000);
 }
 
 function inserirPergunta(){
@@ -245,6 +264,9 @@ function inserirPergunta(){
         .catch(function (error) {
             console.log(error);
         });
+
+    var display = document.querySelector('#time');
+    startTimer(30, display);
 }
 
 function contaPerguntas(){
@@ -282,3 +304,116 @@ function geraIndiceAleatorio(){
 		i++;
 	}
 }*/
+
+function testCadastroUsuario(){
+	nome = document.formLogin.nome.value;
+	username = document.formLogin.uname.value;
+	password = document.formLogin.psw.value;
+	email = document.formLogin.email.value;
+	instituicao = document.formLogin.instituicao.value;
+
+	//foto = document.formCadastro.foto.value;
+	if(nome == "" || username == "" || password == "" || email == "" || instituicao == "")
+	{
+		alert("Por favor, insira os dados corretamente!");
+		$( "#btLogin" ).attr( "href", "#" );
+	}
+	else
+	{
+		if($('input[name=categorias]:checked', '#formLogin').val() == null){
+			alert("Por favor, insira uma categoria!");
+			$( "#btLogin" ).attr( "href", "#" );
+		}
+		else{
+			carregaDadosCadUsuario(); //chamando a função de cadastrar a pergunta;
+		}
+	}
+}
+
+function carregaDadosCadUsuario(){
+	/*_pergunta = document.formLogin.question.value;
+	_alternativa1 = document.formLogin.alt1.value;
+	_alternativa2 = document.formLogin.alt2.value;
+	_alternativa3 = document.formLogin.alt3.value;
+	_alternativa4 = document.formLogin.alt4.value;
+	_alterativaCorreta = $('input[name=categorias]:checked', '#formLogin').val();*/
+
+	nome = document.formLogin.nome.value;
+	username = document.formLogin.uname.value;
+	password = document.formLogin.psw.value;
+	email = document.formLogin.email.value;
+	instituicao = document.formLogin.instituicao.value;
+	categoria = $('input[name=categorias]:checked', '#formLogin').val();
+
+	var Bdate = document.getElementById('bday').value;
+    var Bday = +new Date(Bdate);
+
+    idade = ~~ ((Date.now() - Bday) / (31557600000));
+
+    console.log("Nome: "+ nome);
+    console.log("\nUsername: "+ username);
+    console.log("\npassword: "+ password);
+    console.log("\nemail: "+ email);
+    console.log("\ninstituicao: "+ instituicao);
+    console.log("\ncategoria: "+ categoria);
+    console.log("\nidade: "+ idade);
+    alert("Pausa rápuda");
+
+
+	cadastraUsuario(nome, username, password, email, instituicao, categoria, idade);
+}
+
+function cadastraUsuario(_nome, _uname, _psw, _email, _instituicao, _cat, _idade){ //http://rest.learncode.academy/api/KidLearning/perguntas/
+
+	atualizaDados();
+	atualizaData();
+
+	axios.post('http://rest.learncode.academy/api/KidLearning/users', {
+	    _id: String(idPergunta),
+	    nome: _nome,
+	    username: _uname,
+	    password: _psw,
+	    email: _email,
+	    idade: _idade,
+	    categoria: _cat, //valor da alternativa correta
+	    instituicao: _instituicao
+  }).then(function (response) {
+	  	idPergunta++;
+	  	console.log(idPergunta);
+	    window.location.href="./login.html"
+  });
+  atualizaDados();
+}
+
+function testLogin(){
+	var logged = 0;
+	var username = document.formLogin.uname.value;
+	var senha = document.formLogin.psw.value;
+	if(username == "" || senha == "")
+	{
+		if(senha == "")
+		{
+			alert("Insira sua senha corretamente");
+			alert(arrayUsers.length);
+		}
+
+		if(username == "")
+		{
+			alert("Insira seu username corretamente");
+		}
+	}
+	else{
+		for (var i = 0; i < arrayUsers.length; i++) {
+			if(arrayUsers[i].username == username && arrayUsers[i].password == senha)
+			{
+				alert("LOGIN");
+				logged = 1;
+				usuarioLogado = arrayUsers[i];
+				window.location.replace("./inicio.html");
+			}
+		};
+		if(logged == 0){
+			alert("Usuário não encontrado!");
+		}
+	}
+}
