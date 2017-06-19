@@ -529,9 +529,20 @@ function preencheIncio(){
 		console.log("Alterando paleta de cores da tela inicial para o modo avaliador!");
 		document.getElementById("linkSis").style.backgroundColor = "#00FA9A";
 		document.getElementById("nomeSis").style.backgroundColor = "#00FA9A";
-	} else if(usuarioLogado.categoria == "Professor"){
+		document.getElementById("classicMode").style.display = "none";
+		document.getElementById("contraRelogio").style.display = "none";
+		document.getElementById("duelo").style.display = "none";
+	}
+	else if(usuarioLogado.categoria == "Professor"){
 		console.log("Alterando paleta de cores da tela inicial para o modo professor!");
 		document.getElementById("linkSis").style.backgroundColor = "#FF6347";
 		document.getElementById("nomeSis").style.backgroundColor = "#FF6347";
+		document.getElementById("classicMode").style.display = "none";
+		document.getElementById("contraRelogio").style.display = "none";
+		document.getElementById("duelo").style.display = "none";
+	}
+	else{
+		document.getElementById("avaliarPerg").style.display = "none";
+		document.getElementById("cadastrarPerg").style.display = "none";
 	}
 }
