@@ -525,4 +525,13 @@ function pegaUsuario(){
 
 function preencheIncio(){
 	document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
+	if(usuarioLogado.categoria == "Avaliador"){
+		console.log("Alterando paleta de cores da tela inicial para o modo avaliador!");
+		document.getElementById("linkSis").style.backgroundColor = "#00FA9A";
+		document.getElementById("nomeSis").style.backgroundColor = "#00FA9A";
+	} else if(usuarioLogado.categoria == "Professor"){
+		console.log("Alterando paleta de cores da tela inicial para o modo professor!");
+		document.getElementById("linkSis").style.backgroundColor = "#FF6347";
+		document.getElementById("nomeSis").style.backgroundColor = "#FF6347";
+	}
 }
