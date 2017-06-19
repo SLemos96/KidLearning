@@ -230,7 +230,7 @@ function atualizaDados(){ //atualiza quantidade de dados para manter atualizado 
 		_idAvaliadores: 0, //quantidade de avaliadores-1
 		_idPergunta: idPergunta
 	},
-	  url: 'http://rest.learncode.academy/api/KidLearning/data/',
+	  url: 'http://rest.learncode.academy/api/KidLearning/data/59360ba6704f430100a99a65',
 	  success: function() {
 	    //no data...just a success (200) status code
 	    console.log('Friend Updated Successfully!');
