@@ -68,9 +68,30 @@ function testCorretude(){
 	}
 }
 
+function testCorretudeMC(){
+	if($('input[name=resposta]:checked', '#formResposta').val() == null)
+	{
+		alert("Por favor, insira uma resposta correta!");
+		$( "#botaoCheck" ).attr( "href", "#" );
+	}
+	else
+	{
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
+			alert("Alternativa correta!");
+			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			document.querySelector('#acertos').textContent = qtdAcertos;
+		}
+		else{
+			alert("Alternativa errada!");
+			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			document.getElementById("acertos").innerHTML = qtdAcertos;
+		}
+	}
+}
+
 function inserirPontoAcertos(){
 	document.getElementById("acertos").innerHTML = qtdAcertos;
-	document.getElementById("acertos").innerHTML = qtdPontos;
+	document.getElementById("pontuacao").innerHTML = qtdPontos;
 }
 
 function testAlert(){
@@ -209,7 +230,7 @@ function atualizaDados(){ //atualiza quantidade de dados para manter atualizado 
 		_idAvaliadores: 0, //quantidade de avaliadores-1
 		_idPergunta: idPergunta
 	},
-	  url: 'http://rest.learncode.academy/api/johnbob/friends/1',
+	  url: 'http://rest.learncode.academy/api/KidLearning/data/',
 	  success: function() {
 	    //no data...just a success (200) status code
 	    console.log('Friend Updated Successfully!');
@@ -252,6 +273,8 @@ function carregaUsuarios() {
         .catch(function (error) {
             console.log(error);
         });
+
+        document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
 }
 
 function startTimer(duration, display) {
@@ -440,9 +463,10 @@ function testLogin(){
 		for (var i = 0; i < arrayUsers.length; i++) {
 			if(arrayUsers[i].username == username && arrayUsers[i].password == senha)
 			{
+				usuarioLogado = arrayUsers[i];
+				console.log(usuarioLogado.nome);
 				alert("LOGIN");
 				logged = 1;
-				usuarioLogado = arrayUsers[i];
 				window.location.replace("./inicio.html");
 			}
 		};
