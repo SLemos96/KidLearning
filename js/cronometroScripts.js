@@ -15,7 +15,7 @@ function startTimer(duration, display) {
 
         if (--timer < 0) {
           alert("O tempo acabou");
-          contaPontuacao(0);
+          //contaPontuacao(0);
           window.location.replace("./telaDeEsperaResultadoCR.html");
             timer = duration;
         }

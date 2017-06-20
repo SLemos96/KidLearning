@@ -11,7 +11,7 @@ var i=0;
 var qtdPerguntas; //quantidade de perguntas cadastradas
 var arrayPerguntas = [];
 var arrayUsers = [];
-var usuarioLogado;
+var usuarioLogado = [];
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 var linkFoto = null;
 var valorPergunta = 1;
@@ -68,9 +68,30 @@ function testCorretude(){
 	}
 }
 
+function testCorretudeMC(){
+	if($('input[name=resposta]:checked', '#formResposta').val() == null)
+	{
+		alert("Por favor, insira uma resposta correta!");
+		$( "#botaoCheck" ).attr( "href", "#" );
+	}
+	else
+	{
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
+			alert("Alternativa correta!");
+			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			document.querySelector('#acertos').textContent = qtdAcertos;
+		}
+		else{
+			alert("Alternativa errada!");
+			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			document.getElementById("acertos").innerHTML = qtdAcertos;
+		}
+	}
+}
+
 function inserirPontoAcertos(){
 	document.getElementById("acertos").innerHTML = qtdAcertos;
-	document.getElementById("acertos").innerHTML = qtdPontos;
+	document.getElementById("pontuacao").innerHTML = qtdPontos;
 }
 
 function testAlert(){
@@ -209,7 +230,7 @@ function atualizaDados(){ //atualiza quantidade de dados para manter atualizado 
 		_idAvaliadores: 0, //quantidade de avaliadores-1
 		_idPergunta: idPergunta
 	},
-	  url: 'http://rest.learncode.academy/api/johnbob/friends/1',
+	  url: 'http://rest.learncode.academy/api/KidLearning/data/59360ba6704f430100a99a65',
 	  success: function() {
 	    //no data...just a success (200) status code
 	    console.log('Friend Updated Successfully!');
@@ -252,6 +273,8 @@ function carregaUsuarios() {
         .catch(function (error) {
             console.log(error);
         });
+
+        
 }
 
 function startTimer(duration, display) {
@@ -440,14 +463,86 @@ function testLogin(){
 		for (var i = 0; i < arrayUsers.length; i++) {
 			if(arrayUsers[i].username == username && arrayUsers[i].password == senha)
 			{
+				usuarioLogado = arrayUsers[i];
+				console.log(usuarioLogado.nome);
 				alert("LOGIN");
 				logged = 1;
-				usuarioLogado = arrayUsers[i];
-				window.location.replace("./inicio.html");
+				window.location.replace("./inicio.html?id="+usuarioLogado.id);
 			}
 		};
 		if(logged == 0){
 			alert("Usuário não encontrado!");
 		}
+	}
+}
+
+
+// código obtido no site: https://forum.imasters.com.br/topic/315478-recuperar-um-valor-com-javascript/
+function QS(nome_variavel)
+{
+	var location = new String(window.location);
+	var query_string = location.split('?')[1];
+	if (nome_variavel)
+	{
+		if (query_string)
+		{
+			var retorno = new Array();
+			var variaveis = query_string.split('&');
+			for (i=0; i<variaveis.length; i++)
+			{
+				var chave = new String(variaveis[i].split('=')[0]);
+				if (chave == nome_variavel)
+				{
+					return variaveis[i].split('=')[1];
+				}
+			}
+			return false;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function pegaUsuario(){
+	//document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
+	var id = QS('id');
+	axios.get('http://rest.learncode.academy/api/KidLearning/users/'+id)
+        .then(function (response) {
+            usuarioLogado = response.data;
+            console.log(usuarioLogado.nome);
+            preencheIncio();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function preencheIncio(){
+	document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
+	if(usuarioLogado.categoria == "Avaliador"){
+		console.log("Alterando paleta de cores da tela inicial para o modo avaliador!");
+		document.getElementById("linkSis").style.backgroundColor = "#00FA9A";
+		document.getElementById("nomeSis").style.backgroundColor = "#00FA9A";
+		document.getElementById("classicMode").style.display = "none";
+		document.getElementById("contraRelogio").style.display = "none";
+		document.getElementById("duelo").style.display = "none";
+	}
+	else if(usuarioLogado.categoria == "Professor"){
+		console.log("Alterando paleta de cores da tela inicial para o modo professor!");
+		document.getElementById("linkSis").style.backgroundColor = "#FF6347";
+		document.getElementById("nomeSis").style.backgroundColor = "#FF6347";
+		document.getElementById("classicMode").style.display = "none";
+		document.getElementById("contraRelogio").style.display = "none";
+		document.getElementById("duelo").style.display = "none";
+	}
+	else{
+		document.getElementById("avaliarPerg").style.display = "none";
+		document.getElementById("cadastrarPerg").style.display = "none";
 	}
 }
