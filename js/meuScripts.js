@@ -18,6 +18,7 @@ var valorPergunta = 1;
 var qtdAcertos = 0;
 var qtdPontos = 0;
 var logged; // variável que verfica se o usuário está ou não logado;
+var randomUser;
 
 function armazenaLinkFoto(res){
 	console.log("Chegou aqui!e o link é esse: " + res);
@@ -51,7 +52,9 @@ function testCorretude(){
 				inserirPergunta();
 			} else{
 				//contaPontuacao();
-				$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+				//$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+
+				alteraUrlPontosAcertos('telaDeEsperaResultadoCR', getTempo(), qtdAcertos);
 				document.querySelector('#acertos').textContent = qtdAcertos;
 			}
 		}
@@ -62,7 +65,12 @@ function testCorretude(){
 				inserirPergunta();
 			} else{
 				//contaPontuacao(getTempo());
-				$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+				//$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+
+				//encaminhar para o somatório de pontos e apenas em seguida
+				//redirecionar para a proxima tela
+
+				alteraUrlPontosAcertos('telaDeEsperaResultadoCR', getTempo(), qtdAcertos);
 				document.getElementById("acertos").innerHTML = qtdAcertos;
 			}
 		}
@@ -79,21 +87,38 @@ function testCorretudeMC(){
 	{
 		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
 			alert("Alternativa correta!");
-			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			alteraUrl('inicio');
 			document.querySelector('#acertos').textContent = qtdAcertos;
 		}
 		else{
 			alert("Alternativa errada!");
-			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			alteraUrl('inicio');
 			document.getElementById("acertos").innerHTML = qtdAcertos;
 		}
 	}
 }
 
-function inserirPontoAcertos(){
-	document.getElementById("acertos").innerHTML = qtdAcertos;
-	document.getElementById("pontuacao").innerHTML = qtdPontos;
+function testCorretudeMD(){
+	if($('input[name=resposta]:checked', '#formResposta').val() == null)
+	{
+		alert("Por favor, insira uma resposta correta!");
+		$( "#botaoCheck" ).attr( "href", "#" );
+	}
+	else
+	{
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
+			alert("Alternativa correta!");
+			alteraUrl('inicio');
+			document.querySelector('#acertos').textContent = qtdAcertos;
+		}
+		else{
+			alert("Alternativa errada!");
+			alteraUrl('inicio');
+			document.getElementById("acertos").innerHTML = qtdAcertos;
+		}
+	}
 }
+
 
 function testAlert(){
 	pegaUsuario();
@@ -217,7 +242,7 @@ function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/per
   }).then(function (response) {
 	  	idPergunta++;
 	  	console.log(idPergunta);
-	    window.location.href="./inicio.html"
+	  	alteraUrl('inicio');
   });
   atualizaDados();
 }
@@ -261,9 +286,10 @@ function atualizaDados(){ //atualiza quantidade de dados para manter atualizado 
 function carregaUsuarios() {
     axios.get('http://rest.learncode.academy/api/KidLearning/users')
         .then(function (response) {
-            console.log(response);
+            //console.log(response);
             arrayUsers = response.data; //local onde ficam armazenados os dados de /users
-            console.log(arrayUsers);
+            randomUser = Math.floor(Math.random() * 10)%response.data.length;
+            //console.log(arrayUsers);
         })
         .catch(function (error) {
             console.log(error);
@@ -271,17 +297,15 @@ function carregaUsuarios() {
 
     axios.get('http://rest.learncode.academy/api/KidLearning/data')
         .then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             idPergunta = response.data[0]._idPergunta;
         })
         .catch(function (error) {
             console.log(error);
         });
-
-        
 }
 
-function startTimer(duration, display) {
+/*function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     setInterval(function () {
         minutes = parseInt(timer / 60, 10)
@@ -297,7 +321,7 @@ function startTimer(duration, display) {
           
         }
     }, 1000);
-}
+}*/
 
 function inserirPergunta(){
 	contaPerguntas();
@@ -311,6 +335,8 @@ function inserirPergunta(){
             document.getElementById("alt4").innerHTML = response.data[indiceAleatorioPergunta].alternativa4;
             document.getElementById("fotoPergunta").src = response.data[indiceAleatorioPergunta].foto;
             arrayPerguntas = response.data;
+            pegaUsuario();
+            //reapareceDiv();
         })
         .catch(function (error) {
             console.log(error);
@@ -342,17 +368,11 @@ function contaPerguntas(){
 
 function geraIndiceAleatorio(){
 	//gerando indice aleatório para apresentar sempre perguntas diferentes para o usuário;
+	var passado = indiceAleatorioPergunta;
 	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
-}
-
-function contaPontuacao(_tempoRestante){
-	qtdPontos = (qtdAcertos * 300) - ((5 - qtdAcertos) * 50);
-
-	qtdPontos -= ((30 - _tempoRestante) * 50);
-	if(qtdPontos < 0){
-		qtdPontos = 0;
+	if(passado == indiceAleatorioPergunta){
+		indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
 	}
-	document.querySelector('#pontuacao').textContent = qtdPontos;
 }
 
 /*function alerta(){
@@ -481,16 +501,41 @@ function testLogin(){
 	}
 }
 
+function contaPontuacao(_tempoRestante, acertos){
+	qtdAcertos = acertos;
+	qtdPontos = (qtdAcertos * 300) - ((5 - qtdAcertos) * 25);
+	//alert(qtdAcertos);
+
+	qtdPontos -= ((30 - _tempoRestante) * 10);
+	if(qtdPontos < 0){
+		qtdPontos = 0;
+	}
+	//document.getElementById("pontuacao").innerHTML = qtdPontos;
+}
+
+function inserirPontoAcertos(){
+	var tempoFaltante = QS('tpr');
+	qtdAcertos = QS('ac');
+	contaPontuacao(tempoFaltante, qtdAcertos);
+	document.getElementById("acertos").innerHTML = qtdAcertos;
+	document.getElementById("pontuacao").innerHTML = qtdPontos;
+}
+
 function alteraUrl(pagina){
 	pegaUsuario();
-	alert("./"+pagina+".html?id="+usuarioLogado.id);
+	//alert("./"+pagina+".html?id="+usuarioLogado.id);
 	window.location.replace("./"+pagina+".html?id="+usuarioLogado.id);
+}
+
+function alteraUrlPontosAcertos(pagina, tempo, acertos){
+	pegaUsuario();
+	//alert("./"+pagina+".html?id="+usuarioLogado.id);
+	window.location.replace("./"+pagina+".html?id="+usuarioLogado.id+"&tpr="+tempo+"&ac="+acertos);
 }
 
 
 // código obtido no site: https://forum.imasters.com.br/topic/315478-recuperar-um-valor-com-javascript/
-function QS(nome_variavel)
-{
+function QS(nome_variavel){
 	var location = new String(window.location);
 	var query_string = location.split('?')[1];
 	if (nome_variavel)
@@ -527,6 +572,21 @@ function pegaUsuario(){
         .then(function (response) {
             usuarioLogado = response.data;
             console.log(usuarioLogado.nome);
+            reapareceDiv();
+            preencheIncio();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function pegaUsuarioCR(){
+	//document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
+	var id = QS('id');
+	axios.get('http://rest.learncode.academy/api/KidLearning/users/'+id)
+        .then(function (response) {
+            usuarioLogado = response.data;
+            console.log(usuarioLogado.nome);
             preencheIncio();
         })
         .catch(function (error) {
@@ -543,6 +603,7 @@ function preencheIncio(){
 		document.getElementById("classicMode").style.display = "none";
 		document.getElementById("contraRelogio").style.display = "none";
 		document.getElementById("duelo").style.display = "none";
+		document.getElementById("cadastrarPerg").style.display = "none";
 	}
 	else if(usuarioLogado.categoria == "Professor"){
 		console.log("Alterando paleta de cores da tela inicial para o modo professor!");
@@ -556,8 +617,62 @@ function preencheIncio(){
 		document.getElementById("avaliarPerg").style.display = "none";
 		document.getElementById("cadastrarPerg").style.display = "none";
 	}
+	reapareceDiv();
 }
 
 function logout(){
 	logged = 0;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function pegaUserDuelo(){
+	var id = QS('id');
+	axios.get('http://rest.learncode.academy/api/KidLearning/users/'+id)
+        .then(function (response) {
+            usuarioLogado = response.data;
+            console.log(usuarioLogado.nome);
+            preencheCampos();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function preencheCampos(){
+	randomUser = Math.floor(Math.random() * 10)%arrayUsers.length;
+	if(arrayUsers[randomUser].id == usuarioLogado.id){
+		randomUser = Math.floor(Math.random() * 10)%arrayUsers.length;
+	}
+	document.getElementById("jogador1").innerHTML = usuarioLogado.nome;
+	//alert(randomUser);
+	document.getElementById("jogador2").innerHTML = arrayUsers[randomUser].nome;
+
+	reapareceDiv();
+
+	
+}
+
+function carregaUsuariosAlt() {
+    axios.get('http://rest.learncode.academy/api/KidLearning/users')
+        .then(function (response) {
+            //console.log(response);
+            arrayUsers = response.data; //local onde ficam armazenados os dados de /users
+            randomUser = Math.floor(Math.random() * 10)%response.data.length;
+            //console.log(arrayUsers);
+            pegaUserDuelo();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function escondeDiv() {
+	document.getElementById("corpo").style.display = "none";
+}
+ 
+function reapareceDiv() {
+	document.getElementById("corpo").style.display = "block";
 }

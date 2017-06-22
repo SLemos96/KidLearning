@@ -22,20 +22,38 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body id="corpo" onload="carregaUsuarios(), pegaUsuario()", onmousemove="">
+<body id="corpo" onload="carregaUsuariosAlt(), escondeDiv()", onmousemove="">
     
     <div class="container-fluid bg-1 text-center">
-        <h2>Você está prestes a inciciar o modo ContraRelogio</h2><br>
+        <h2>Você está prestes a inciciar o modo Duelo</h2><br>
         <h3>Para continuar pressione o botão a seguir:</h3>
     </div>
 
     <div class="container-fluid text-center">
         <div class="row">
+          <div class=" col-md-6">
+            <img src="imgs/img_avatar2.png" alt="Avatar" width="350" height="350" class="avatar">
+          </div>
+
+          <div class=" col-md-6">
+            <img src="imgs/img_avatar2.png" alt="Avatar" width="350" height="350" class="avatar">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class=" col-md-6">
+            <h4 id="jogador1"></h4>
+          </div>
+
+          <div class=" col-md-6">
+            <h4 id="jogador2"></h4>
+          </div>
+        </div>
+
+        <div class="row">
             <div class=" col-md-12">
-                    <a id="botaoCheck" onclick="alteraUrl('responderPerguntaAlunoContraRelogio')" class="btn btn-default btn-lg" onclick=''><span class="glyphicon glyphicon-ok"></span> Prosseguir</a>
+                    <a id="botaoCheck" onclick="alteraUrl('responderPerguntaAlunoDuelo')" class="btn btn-default btn-lg" onclick=''><span class="glyphicon glyphicon-ok"></span> Jogar</a>
             </div>
-
-
         </div>
 
     </div>
