@@ -87,12 +87,12 @@ function testCorretudeMC(){
 	{
 		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
 			alert("Alternativa correta!");
-			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			alteraUrl('inicio');
 			document.querySelector('#acertos').textContent = qtdAcertos;
 		}
 		else{
 			alert("Alternativa errada!");
-			$( "#botaoCheck" ).attr( "href", "inicio.html" );
+			alteraUrl('inicio');
 			document.getElementById("acertos").innerHTML = qtdAcertos;
 		}
 	}
