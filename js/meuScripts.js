@@ -314,7 +314,8 @@ function inserirPergunta(){
             document.getElementById("alt4").innerHTML = response.data[indiceAleatorioPergunta].alternativa4;
             document.getElementById("fotoPergunta").src = response.data[indiceAleatorioPergunta].foto;
             arrayPerguntas = response.data;
-            reapareceDiv();
+            pegaUsuario();
+            //reapareceDiv();
         })
         .catch(function (error) {
             console.log(error);
@@ -540,6 +541,21 @@ function QS(nome_variavel){
 }
 
 function pegaUsuario(){
+	//document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
+	var id = QS('id');
+	axios.get('http://rest.learncode.academy/api/KidLearning/users/'+id)
+        .then(function (response) {
+            usuarioLogado = response.data;
+            console.log(usuarioLogado.nome);
+            reapareceDiv();
+            preencheIncio();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function pegaUsuarioCR(){
 	//document.getElementById("nomeUser").innerHTML = usuarioLogado.nome;
 	var id = QS('id');
 	axios.get('http://rest.learncode.academy/api/KidLearning/users/'+id)
