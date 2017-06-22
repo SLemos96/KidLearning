@@ -28,4 +28,4 @@ Modo de jogo clássico;
 Modo de jogo contra-relógio;
 
 ## Quinto cenário:
-Sala do Doutor - Avaliação da aptidão do aluno, levando em consideração porcentagem de acertos;
+Modo de jogo duelo - O usuário consegue interagir com outros usuários do sistema em forma de desafios;
