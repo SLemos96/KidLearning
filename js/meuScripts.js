@@ -347,7 +347,11 @@ function contaPerguntas(){
 
 function geraIndiceAleatorio(){
 	//gerando indice aleatório para apresentar sempre perguntas diferentes para o usuário;
+	var passado = indiceAleatorioPergunta;
 	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
+	if(passado == indiceAleatorioPergunta){
+		indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
+	}
 }
 
 /*function alerta(){
