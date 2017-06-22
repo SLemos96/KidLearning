@@ -18,6 +18,7 @@ var valorPergunta = 1;
 var qtdAcertos = 0;
 var qtdPontos = 0;
 var logged; // variável que verfica se o usuário está ou não logado;
+var randomUser;
 
 function armazenaLinkFoto(res){
 	console.log("Chegou aqui!e o link é esse: " + res);
@@ -261,9 +262,10 @@ function atualizaDados(){ //atualiza quantidade de dados para manter atualizado 
 function carregaUsuarios() {
     axios.get('http://rest.learncode.academy/api/KidLearning/users')
         .then(function (response) {
-            console.log(response);
+            //console.log(response);
             arrayUsers = response.data; //local onde ficam armazenados os dados de /users
-            console.log(arrayUsers);
+            randomUser = Math.floor(Math.random() * 10)%response.data.length;
+            //console.log(arrayUsers);
         })
         .catch(function (error) {
             console.log(error);
@@ -271,7 +273,7 @@ function carregaUsuarios() {
 
     axios.get('http://rest.learncode.academy/api/KidLearning/data')
         .then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             idPergunta = response.data[0]._idPergunta;
         })
         .catch(function (error) {
@@ -489,8 +491,7 @@ function alteraUrl(pagina){
 
 
 // código obtido no site: https://forum.imasters.com.br/topic/315478-recuperar-um-valor-com-javascript/
-function QS(nome_variavel)
-{
+function QS(nome_variavel){
 	var location = new String(window.location);
 	var query_string = location.split('?')[1];
 	if (nome_variavel)
@@ -560,4 +561,47 @@ function preencheIncio(){
 
 function logout(){
 	logged = 0;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function pegaUserDuelo(){
+	var id = QS('id');
+	axios.get('http://rest.learncode.academy/api/KidLearning/users/'+id)
+        .then(function (response) {
+            usuarioLogado = response.data;
+            console.log(usuarioLogado.nome);
+            preencheCampos();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function preencheCampos(){
+	randomUser = Math.floor(Math.random() * 10)%arrayUsers.length;
+	if(arrayUsers[randomUser].id == usuarioLogado.id){
+		randomUser = Math.floor(Math.random() * 10)%arrayUsers.length;
+	}
+	document.getElementById("jogador1").innerHTML = usuarioLogado.nome;
+	alert(randomUser);
+	document.getElementById("jogador2").innerHTML = arrayUsers[randomUser].nome;
+
+	
+}
+
+function carregaUsuariosAlt() {
+    axios.get('http://rest.learncode.academy/api/KidLearning/users')
+        .then(function (response) {
+            //console.log(response);
+            arrayUsers = response.data; //local onde ficam armazenados os dados de /users
+            randomUser = Math.floor(Math.random() * 10)%response.data.length;
+            //console.log(arrayUsers);
+            pegaUserDuelo();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
