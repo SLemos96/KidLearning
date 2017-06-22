@@ -22,7 +22,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body id="corpo" onload="carregaUsuarios(), inserirPontoAcertos()", onmousemove="">
+<body id="corpo" onload="carregaUsuarios(), inserirPontoAcertos(), pegaUsuario()", onmousemove="">
     
     <div class="container-fluid bg-1 text-center">
         <h2>Você acertou <span id="acertos"></span> questões!</h2><br>
@@ -32,7 +32,7 @@
     <div class="container-fluid text-center">
         <div class="row">
             <div class=" col-md-12">
-                    <a id="botaoCheck" href="inicio.html" class="btn btn-default btn-lg" onclick=''><span class="glyphicon glyphicon-ok"></span> Voltar ao início</a>
+                    <a id="botaoCheck" onclick="alteraUrl('inicio')" class="btn btn-default btn-lg" onclick=''><span class="glyphicon glyphicon-ok"></span> Voltar ao início</a>
             </div>
 
 
