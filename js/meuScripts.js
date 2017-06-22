@@ -586,7 +586,7 @@ function preencheCampos(){
 		randomUser = Math.floor(Math.random() * 10)%arrayUsers.length;
 	}
 	document.getElementById("jogador1").innerHTML = usuarioLogado.nome;
-	alert(randomUser);
+	//alert(randomUser);
 	document.getElementById("jogador2").innerHTML = arrayUsers[randomUser].nome;
 
 	
