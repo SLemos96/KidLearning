@@ -22,7 +22,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body id="corpo" onload="pegaUsuario(), carregaUsuarios()", onmousemove="">
+<body id="corpo" onload="pegaUsuario(), carregaUsuarios(), escondeDiv()", onmousemove="" style="">
     
     <div id="nomeSis" class="container-fluid bg-1 text-center">
         <h1>KID LEARNING</h1>
@@ -40,7 +40,7 @@
 
             <div class=" col-md-4">
                 <h3>
-                    <a class="menuLink" id="duelo" onclick="alteraUrl('responderPergunta')">MODO DUELO</a>
+                    <a class="menuLink" id="duelo" onclick="alteraUrl('telaDeEsperaDuelo')">MODO DUELO</a>
                 </h3>
             </div>
 
