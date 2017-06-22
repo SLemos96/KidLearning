@@ -98,6 +98,27 @@ function testCorretudeMC(){
 	}
 }
 
+function testCorretudeMD(){
+	if($('input[name=resposta]:checked', '#formResposta').val() == null)
+	{
+		alert("Por favor, insira uma resposta correta!");
+		$( "#botaoCheck" ).attr( "href", "#" );
+	}
+	else
+	{
+		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
+			alert("Alternativa correta!");
+			alteraUrl('inicio');
+			document.querySelector('#acertos').textContent = qtdAcertos;
+		}
+		else{
+			alert("Alternativa errada!");
+			alteraUrl('inicio');
+			document.getElementById("acertos").innerHTML = qtdAcertos;
+		}
+	}
+}
+
 
 function testAlert(){
 	pegaUsuario();
