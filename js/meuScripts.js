@@ -52,7 +52,9 @@ function testCorretude(){
 				inserirPergunta();
 			} else{
 				//contaPontuacao();
-				$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+				//$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+
+				alteraUrlPontosAcertos('telaDeEsperaResultadoCR', getTempo(), qtdAcertos);
 				document.querySelector('#acertos').textContent = qtdAcertos;
 			}
 		}
@@ -63,7 +65,12 @@ function testCorretude(){
 				inserirPergunta();
 			} else{
 				//contaPontuacao(getTempo());
-				$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+				//$( "#botaoCheck" ).attr( "href", "telaDeEsperaResultadoCR.html" );
+
+				//encaminhar para o somatório de pontos e apenas em seguida
+				//redirecionar para a proxima tela
+
+				alteraUrlPontosAcertos('telaDeEsperaResultadoCR', getTempo(), qtdAcertos);
 				document.getElementById("acertos").innerHTML = qtdAcertos;
 			}
 		}
@@ -91,10 +98,6 @@ function testCorretudeMC(){
 	}
 }
 
-function inserirPontoAcertos(){
-	document.getElementById("acertos").innerHTML = qtdAcertos;
-	document.getElementById("pontuacao").innerHTML = qtdPontos;
-}
 
 function testAlert(){
 	pegaUsuario();
@@ -279,11 +282,9 @@ function carregaUsuarios() {
         .catch(function (error) {
             console.log(error);
         });
-
-        
 }
 
-function startTimer(duration, display) {
+/*function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     setInterval(function () {
         minutes = parseInt(timer / 60, 10)
@@ -299,7 +300,7 @@ function startTimer(duration, display) {
           
         }
     }, 1000);
-}
+}*/
 
 function inserirPergunta(){
 	contaPerguntas();
@@ -313,6 +314,7 @@ function inserirPergunta(){
             document.getElementById("alt4").innerHTML = response.data[indiceAleatorioPergunta].alternativa4;
             document.getElementById("fotoPergunta").src = response.data[indiceAleatorioPergunta].foto;
             arrayPerguntas = response.data;
+            reapareceDiv();
         })
         .catch(function (error) {
             console.log(error);
@@ -345,16 +347,6 @@ function contaPerguntas(){
 function geraIndiceAleatorio(){
 	//gerando indice aleatório para apresentar sempre perguntas diferentes para o usuário;
 	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
-}
-
-function contaPontuacao(_tempoRestante){
-	qtdPontos = (qtdAcertos * 300) - ((5 - qtdAcertos) * 50);
-
-	qtdPontos -= ((30 - _tempoRestante) * 50);
-	if(qtdPontos < 0){
-		qtdPontos = 0;
-	}
-	document.querySelector('#pontuacao').textContent = qtdPontos;
 }
 
 /*function alerta(){
@@ -483,10 +475,36 @@ function testLogin(){
 	}
 }
 
+function contaPontuacao(_tempoRestante, acertos){
+	qtdAcertos = acertos;
+	qtdPontos = (qtdAcertos * 300) - ((5 - qtdAcertos) * 25);
+	//alert(qtdAcertos);
+
+	qtdPontos -= ((30 - _tempoRestante) * 10);
+	if(qtdPontos < 0){
+		qtdPontos = 0;
+	}
+	//document.getElementById("pontuacao").innerHTML = qtdPontos;
+}
+
+function inserirPontoAcertos(){
+	var tempoFaltante = QS('tpr');
+	qtdAcertos = QS('ac');
+	contaPontuacao(tempoFaltante, qtdAcertos);
+	document.getElementById("acertos").innerHTML = qtdAcertos;
+	document.getElementById("pontuacao").innerHTML = qtdPontos;
+}
+
 function alteraUrl(pagina){
 	pegaUsuario();
-	alert("./"+pagina+".html?id="+usuarioLogado.id);
+	//alert("./"+pagina+".html?id="+usuarioLogado.id);
 	window.location.replace("./"+pagina+".html?id="+usuarioLogado.id);
+}
+
+function alteraUrlPontosAcertos(pagina, tempo, acertos){
+	pegaUsuario();
+	//alert("./"+pagina+".html?id="+usuarioLogado.id);
+	window.location.replace("./"+pagina+".html?id="+usuarioLogado.id+"&tpr="+tempo+"&ac="+acertos);
 }
 
 
@@ -557,6 +575,7 @@ function preencheIncio(){
 		document.getElementById("avaliarPerg").style.display = "none";
 		document.getElementById("cadastrarPerg").style.display = "none";
 	}
+	reapareceDiv();
 }
 
 function logout(){
@@ -589,6 +608,8 @@ function preencheCampos(){
 	//alert(randomUser);
 	document.getElementById("jogador2").innerHTML = arrayUsers[randomUser].nome;
 
+	reapareceDiv();
+
 	
 }
 
@@ -604,4 +625,12 @@ function carregaUsuariosAlt() {
         .catch(function (error) {
             console.log(error);
         });
+}
+
+function escondeDiv() {
+	document.getElementById("corpo").style.display = "none";
+}
+ 
+function reapareceDiv() {
+	document.getElementById("corpo").style.display = "block";
 }
