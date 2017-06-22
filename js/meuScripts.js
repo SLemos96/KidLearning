@@ -11,12 +11,13 @@ var i=0;
 var qtdPerguntas; //quantidade de perguntas cadastradas
 var arrayPerguntas = [];
 var arrayUsers = [];
-var usuarioLogado = [];
+var usuarioLogado;
 var indiceAleatorioPergunta; //usado para gerar um valor aleatório dentro do banco de perguntas
 var linkFoto = null;
 var valorPergunta = 1;
 var qtdAcertos = 0;
 var qtdPontos = 0;
+var logged; // variável que verfica se o usuário está ou não logado;
 
 function armazenaLinkFoto(res){
 	console.log("Chegou aqui!e o link é esse: " + res);
@@ -95,6 +96,7 @@ function inserirPontoAcertos(){
 }
 
 function testAlert(){
+	pegaUsuario();
 	if($('input[name=resposta]:checked', '#formResposta').val() == null)
 	{
 		alert("Por favor, insira uma resposta correta!");
@@ -104,11 +106,11 @@ function testAlert(){
 	{
 		if ($('input[name=resposta]:checked', '#formResposta').val() == arrayPerguntas[indiceAleatorioPergunta].alterativaCorreta) {
 			alert("Alternativa correta!");
-			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
+			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html?id="+usuarioLogado.id );
 		}
 		else{
 			alert("Alternativa errada!");
-			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html" );
+			$( "#botaoCheck" ).attr( "href", "avaliacaoPergunta.html?id="+usuarioLogado.id );
 		}
 	}
 }
@@ -122,6 +124,8 @@ function aprova(){
 	alert("Você aprovou a pergunta! Obrigado pela colaboração! Equipe #KL");
 	root = arrayPerguntas.id;
 	popPergunta += arrayPerguntas[indiceAleatorioPergunta].popularidadePergunta;
+	pegaUsuario();
+	alteraUrl('inicio');
 
 	axios.get('http://rest.learncode.academy/api/KidLearning/perguntas/')
         .then(function (response) {
@@ -337,6 +341,7 @@ function contaPerguntas(){
 }
 
 function geraIndiceAleatorio(){
+	//gerando indice aleatório para apresentar sempre perguntas diferentes para o usuário;
 	indiceAleatorioPergunta = Math.floor(Math.random() * 10)%qtdPerguntas;
 }
 
@@ -414,7 +419,7 @@ function carregaDadosCadUsuario(){
     console.log("\ninstituicao: "+ instituicao);
     console.log("\ncategoria: "+ categoria);
     console.log("\nidade: "+ idade);
-    alert("Pausa rápuda");
+    //alert("Pausa rápuda");
 
 
 	cadastraUsuario(nome, username, password, email, instituicao, categoria, idade);
@@ -443,7 +448,7 @@ function cadastraUsuario(_nome, _uname, _psw, _email, _instituicao, _cat, _idade
 }
 
 function testLogin(){
-	var logged = 0;
+	logged = 0;
 	var username = document.formLogin.uname.value;
 	var senha = document.formLogin.psw.value;
 	if(username == "" || senha == "")
@@ -451,7 +456,7 @@ function testLogin(){
 		if(senha == "")
 		{
 			alert("Insira sua senha corretamente");
-			alert(arrayUsers.length);
+			//alert(arrayUsers.length);
 		}
 
 		if(username == "")
@@ -474,6 +479,12 @@ function testLogin(){
 			alert("Usuário não encontrado!");
 		}
 	}
+}
+
+function alteraUrl(pagina){
+	pegaUsuario();
+	alert("./"+pagina+".html?id="+usuarioLogado.id);
+	window.location.replace("./"+pagina+".html?id="+usuarioLogado.id);
 }
 
 
@@ -545,4 +556,8 @@ function preencheIncio(){
 		document.getElementById("avaliarPerg").style.display = "none";
 		document.getElementById("cadastrarPerg").style.display = "none";
 	}
+}
+
+function logout(){
+	logged = 0;
 }
