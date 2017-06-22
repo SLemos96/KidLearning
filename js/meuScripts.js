@@ -242,7 +242,7 @@ function cadastraPergunta(){ //http://rest.learncode.academy/api/KidLearning/per
   }).then(function (response) {
 	  	idPergunta++;
 	  	console.log(idPergunta);
-	    window.location.href="./inicio.html"
+	  	alteraUrl('inicio');
   });
   atualizaDados();
 }
@@ -603,6 +603,7 @@ function preencheIncio(){
 		document.getElementById("classicMode").style.display = "none";
 		document.getElementById("contraRelogio").style.display = "none";
 		document.getElementById("duelo").style.display = "none";
+		document.getElementById("cadastrarPerg").style.display = "none";
 	}
 	else if(usuarioLogado.categoria == "Professor"){
 		console.log("Alterando paleta de cores da tela inicial para o modo professor!");
